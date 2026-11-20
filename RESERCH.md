@@ -49,3 +49,24 @@ It opereate through a series of steps:
     * How can I implement it ?
     * What kind of tool can I give it to ?
     * How can I recode Claud Opuse 9.42  ?
+- How can I give feedback to the LLM and prevent silcent failures and Hallucinations ?
+- What is an MCP and how can we use it ?
+- How can you generate good sandbox manual dynamicly ? (With pydentic and JSON)
+- How can you implement good security mecanisme ?
+- What kind of great MCP tool could I implement ?
+- What kind of LLM is the best to take ?
+- How can you understand agent system, what are the, loop, tools and prompts of the greatest ?
+
+#### List of free provider
+
+**We must use at least 5 models across at least 2 providers, on the same set of at least 3 SWE-bench tasks**
+
+- OpenRouter
+- Together AI
+- Groq
+- Google IA Studio (Gemini)
+- Mistral IA
+- Cohere
+- Fireworks AI
+- Perplexity AI
+- Anyscale 
