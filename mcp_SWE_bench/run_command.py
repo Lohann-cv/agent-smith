@@ -4,10 +4,9 @@ from typing import Annotated
 from mcp.server import MCPServer
 from mcp.server.mcpserver.exceptions import ToolError
 from pydantic import Field
+from utils import check_directory
 
 mcp = MCPServer("mbpp")
-BASE_DIR = Path.cwd().resolve()
-
 TIMEOUT_SECONDS = 60
 
 """===RUN_COMMAND==="""
@@ -42,9 +41,7 @@ def run_command(
     """
     if not command.strip():
         raise ToolError("'command' cannot be empty.")
-
-    target = _check_workdir(workdir)
-
+    target = check_directory(workdir)
     try:
         completed = subprocess.run(
             command,
@@ -62,10 +59,8 @@ def run_command(
         ) from exc
     except OSError as exc:
         raise ToolError(f"Failed to execute command: {exc}") from exc
-
     stdout = completed.stdout.strip()
     stderr = completed.stderr.strip()
-
     parts = [f"Exit code: {completed.returncode}"]
     if stdout:
         parts.append(f"STDOUT:\n{stdout}")
@@ -73,21 +68,4 @@ def run_command(
         parts.append(f"STDERR:\n{stderr}")
     if not stdout and not stderr:
         parts.append("(no output)")
-
     return "\n\n".join(parts)
-
-"""===UTILS==="""
-
-# TODO refactor with _check_directory
-def _check_workdir(workdir: str) -> Path:
-    """Validate that dir is an existing directory."""
-    if not workdir.strip():
-        raise ToolError("'workdir' cannot be empty.")
-    target = (BASE_DIR / workdir).resolve()
-    if target != BASE_DIR and BASE_DIR not in target.parents:
-        raise ToolError("The working directory cannot be outside the repository.")
-    if not target.exists():
-        raise ToolError(f"The working directory '{workdir}' doesn't exist.")
-    if not target.is_dir():
-        raise ToolError(f"The given path '{workdir}' isn't a directory.")
-    return target

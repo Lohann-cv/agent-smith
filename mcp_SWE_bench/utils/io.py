@@ -28,9 +28,9 @@ def read_text_file(target: Path, filepath: str) -> str:
 
 def check_directory(directory: str) -> Path:
     """Resolve and validate a directory path inside BASE_DIRE."""
-    cleaned = directory.strip()
-    confirmed = cleaned if cleaned else "." # TODO move that line to refactor with check_workdir
-    target = (BASE_DIR / confirmed).resolve()
+    if not directory.strip():
+        raise ToolError("'directory' cannot be empty")
+    target = (BASE_DIR / directory).resolve()
     if target != BASE_DIR and BASE_DIR not in target.parents:
         raise ToolError(
             f"Access denied: '{directory}' is outside the allowed repository."
