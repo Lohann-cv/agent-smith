@@ -1,4 +1,3 @@
-from pathlib import Path
 from typing import Annotated
 from utils import check_directory, BASE_DIR
 from mcp.server import MCPServer
@@ -6,8 +5,6 @@ from mcp.server.mcpserver.exceptions import ToolError
 from pydantic import Field
 
 mcp = MCPServer("mbpp")
-BASE_DIR = Path.cwd().resolve()
-MAX_RESULTS = 200
 
 """===LIST_FILES==="""
 
@@ -56,9 +53,5 @@ def list_files(
     files.sort()
     if not files:
         return f"No files matching '{pattern}' found in '{directory}'."
-    truncated = len(files) > MAX_RESULTS  # May not mandatory with bench
-    shown = files[:MAX_RESULTS]
-    output = "\n".join(shown)
-    if truncated:
-        output += f"\n... (showing first {MAX_RESULTS} of {len(files)} files)"
+    output = "\n".join(files)
     return output
