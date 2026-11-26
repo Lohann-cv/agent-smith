@@ -25,3 +25,18 @@ def read_text_file(target: Path, filepath: str) -> str:
         raise ToolError(f"Cannot read the file '{filepath}', permission refused.") from exc
     except UnicodeDecodeError as exc:
         raise ToolError(f"Cannot convert the file '{filepath}' to UTF-8") from exc
+
+def check_directory(directory: str) -> Path:
+    """Resolve and validate a directory path inside BASE_DIRE."""
+    cleaned = directory.strip()
+    confirmed = cleaned if cleaned else "." # TODO move that line to refactor with check_workdir
+    target = (BASE_DIR / confirmed).resolve()
+    if target != BASE_DIR and BASE_DIR not in target.parents:
+        raise ToolError(
+            f"Access denied: '{directory}' is outside the allowed repository."
+        )
+    if not target.exists():
+        raise ToolError(f"Directory '{directory}' dosn't exist.")
+    if not target.is_dir():
+        raise ToolError(f"Path '{directory}' isn't a directory.")
+    return target
