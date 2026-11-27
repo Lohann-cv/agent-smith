@@ -45,14 +45,26 @@ def check_directory(directory: str) -> Path:
     return target
 
 def run_subprocess(args: list[str], directory: Path, shell_mod: bool) -> str:
-    """TODO"""
+    """Run a subprocess with given parameter and return its formated exit.
+
+    Args:
+        args: A list of the command to run.
+        directory: The directory where to run the command.
+        shell_mode: Whether to run in a shell or not
+
+    Returns:
+        A formated string representing the result of the program.
+
+    Raises:
+        ToolError if the process wasn't able to run or if a timeout occured.
+    """
     try:
         result = subprocess.run(
             args,
             cwd=directory,
             capture_output=True,
             text=True,
-            encoding="utf-8",
+            encoding="utf-8"
             errors="replace",
             timeout=TIMEOUT_SECONDS,
             shell=shell_mod
