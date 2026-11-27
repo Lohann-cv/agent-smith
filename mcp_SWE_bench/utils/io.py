@@ -3,6 +3,7 @@ import subprocess
 import sys
 from mcp.server.mcpserver.exceptions import ToolError
 
+TIMEOUT_SECOND = 30
 BASE_DIR = Path.cwd().resolve()
 
 def check_path(filepath: str) -> Path:
@@ -58,6 +59,8 @@ def run_subprocess(args: list[str], directory: Path, shell_mod: bool) -> str:
         )
     except subprocess.TimeoutExpired as exc:
         raise ToolError(f"Execution failed: {exc}") from exc
+    except OSError as exc:
+        raise ToolError(f"The command failed: {exc}") from exc
     stdout = result.stdout.strip()
     stderr = result.stderr.strip()
     subpro_exit = [f"Exit code: {result.returncode}"]
@@ -65,6 +68,6 @@ def run_subprocess(args: list[str], directory: Path, shell_mod: bool) -> str:
         subpro_exit.append(f"STDOUT:\n{stdout}")
     if stderr:
         subpro_exit.append(f"STDERR:\n{stderr}")
-    if not stdout and not strerr:
+    if not stdout and not stderr:
         subpro_exit.append("(no output)")
     return "\n\n".join(subpro_exit)
