@@ -4,7 +4,7 @@ from typing import Annotated
 from mcp.server import MCPServer
 from mcp.server.mcpserver.exceptions import ToolError
 from pydantic import Field
-from utils import check_directory
+from utils import check_directory, run_subprocess
 
 mcp = MCPServer("mbpp")
 TIMEOUT_SECONDS = 60
@@ -42,30 +42,4 @@ def run_command(
     if not command.strip():
         raise ToolError("'command' cannot be empty.")
     target = check_directory(workdir)
-    try:
-        completed = subprocess.run(
-            command,
-            cwd=target,
-            shell=True,
-            capture_output=True,
-            text=True,
-            encoding="utf-8",
-            errors="replace",
-            timeout=TIMEOUT_SECONDS,
-        )
-    except subprocess.TimeoutExpired as exc:
-        raise ToolError(
-            f"Command timed out after {TIMEOUT_SECONDS} seconds."
-        ) from exc
-    except OSError as exc:
-        raise ToolError(f"Failed to execute command: {exc}") from exc
-    stdout = completed.stdout.strip()
-    stderr = completed.stderr.strip()
-    parts = [f"Exit code: {completed.returncode}"]
-    if stdout:
-        parts.append(f"STDOUT:\n{stdout}")
-    if stderr:
-        parts.append(f"STDERR:\n{stderr}")
-    if not stdout and not stderr:
-        parts.append("(no output)")
-    return "\n\n".join(parts)
+    return run_subprocess(command, target, True)

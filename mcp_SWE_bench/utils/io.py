@@ -1,4 +1,6 @@
 from pathlib import Path
+import subprocess
+import sys
 from mcp.server.mcpserver.exceptions import ToolError
 
 BASE_DIR = Path.cwd().resolve()
@@ -40,3 +42,29 @@ def check_directory(directory: str) -> Path:
     if not target.is_dir():
         raise ToolError(f"Path '{directory}' isn't a directory.")
     return target
+
+def run_subprocess(args: list[str], directory: Path, shell_mod: bool) -> str:
+    """TODO"""
+    try:
+        result = subprocess.run(
+            args,
+            cwd=directory,
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            timeout=TIMEOUT_SECOND,
+            shell=shell_mod
+        )
+    except subprocess.TimeoutExpired as exc:
+        raise ToolError(f"Execution failed: {exc}") from exc
+    stdout = result.stdout.strip()
+    stderr = result.stderr.strip()
+    subpro_exit = [f"Exit code: {result.returncode}"]
+    if stdout:
+        subpro_exit.append(f"STDOUT:\n{stdout}")
+    if stderr:
+        subpro_exit.append(f"STDERR:\n{stderr}")
+    if not stdout and not strerr:
+        subpro_exit.append("(no output)")
+    return "\n\n".join(subpro_exit)
