@@ -3,7 +3,7 @@ import subprocess
 import sys
 from mcp.server.mcpserver.exceptions import ToolError
 
-TIMEOUT_SECOND = 30
+TIMEOUT_SECONDS = 30
 BASE_DIR = Path.cwd().resolve()
 
 def check_path(filepath: str) -> Path:
@@ -54,7 +54,7 @@ def run_subprocess(args: list[str], directory: Path, shell_mod: bool) -> str:
             text=True,
             encoding="utf-8",
             errors="replace",
-            timeout=TIMEOUT_SECOND,
+            timeout=TIMEOUT_SECONDS,
             shell=shell_mod
         )
     except subprocess.TimeoutExpired as exc:

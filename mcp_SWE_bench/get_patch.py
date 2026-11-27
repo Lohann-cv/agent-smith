@@ -1,11 +1,9 @@
-from pathlib import Path
 import subprocess
-from utils import BASE_DIR
+from utils import BASE_DIR, TIMEOUT_SECONDS
 from mcp.server import MCPServer
 from mcp.server.mcpserver.exceptions import ToolError
 
 mcp = MCPServer("mbpp")
-TIMEOUT_SECONDS = 30
 
 """===GET_PATCH==="""
 

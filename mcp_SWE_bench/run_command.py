@@ -1,5 +1,3 @@
-from pathlib import Path
-import subprocess
 from typing import Annotated
 from mcp.server import MCPServer
 from mcp.server.mcpserver.exceptions import ToolError
@@ -7,9 +5,6 @@ from pydantic import Field
 from utils import check_directory, run_subprocess
 
 mcp = MCPServer("mbpp")
-TIMEOUT_SECONDS = 60
-
-"""===RUN_COMMAND==="""
 
 @mcp.tool(
     name="run_command",

@@ -1,13 +1,11 @@
 from pathlib import Path
 import sys
-import subprocess
 from mcp.server import MCPServer
 from mcp.server.mcpserver.exceptions import ToolError
-from utils import BASE_DIR, run_subprocess
+from utils import BASE_DIR, run_subprocess, TIMEOUT_SECONDS
 
 mcp = MCPServer("mbpp")
-SCRIPT_TO_RUN = BASE_DIR / #TODO put the asked path of the subject
-TIMEOUT_SECONDS = #TODO but the asked timeout + refactor
+SCRIPT_TO_RUN = BASE_DIR / testbed.py
 
 """===RUN_TESTS==="""
 
