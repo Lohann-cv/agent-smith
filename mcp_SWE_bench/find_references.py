@@ -4,9 +4,9 @@ from mcp.server import MCPServer
 from mcp.server.mcpserver.exceptions import ToolError
 from typing import Annotated
 from pydantic import Field
+from utils import BASE_DIR, check_path, read_text_file
 
 mcp = MCPServer("mbpp")
-BASE_DIR = Path.cwd().resolve()
 
 """===FIND_REFERENCES==="""
 
@@ -34,9 +34,9 @@ s for.")
     if not target:
         raise ToolError("'name' cannot be empty.")
     if line < 1:
-        raise ToolError("'line' must be greater than or equal to 1.")
-    origin_file = _check_path(filepath)
-    origin_lines = _read_text_file(origin_file, filepath).splitlines()
+        raise ToolError("'line' must be greater than or equal to 1.") 
+    origin_file = check_path(filepath)
+    origin_lines = read_text_file(origin_file, filepath).splitlines()
     if not origin_lines or line > len(origin_lines):
         raise ToolError(
             f"'line' ({line}) is out of range for '{filepath}' (total lines: {len(origin_lines)
@@ -75,27 +75,3 @@ s for.")
     if not results:
         return f"No references found for '{target}'."
     return "\n".join(f"{path}:{line_id} {content}" for path, line_id, content in results)
-
-"""===UTILS==="""
-
-def _check_path(filepath: str) -> Path:
-    """Check if a path is a text file"""
-    if not filepath.strip():
-        raise ToolError("'filepath' cannot be empty.")
-    target = (BASE_DIR / filepath).resolve()
-    if target == BASE_DIR or BASE_DIR not in target.parents:
-        raise ToolError("The targeted file cannot be outside the repository.")
-    if not target.exists():
-        raise ToolError(f"The file '{filepath}' dosn't exists.")
-    if not target.is_file():
-        raise ToolError(f"The given path '{filepath}' isn't a file.")
-    return target
-
-def _read_text_file(target: Path, filepath: str) -> str:
-    """Read a text file and return its content as a string."""
-    try:
-        return target.read_text(encoding="utf-8")
-    except PermissionError as exc:
-        raise ToolError(f"Cannot read the file '{filepath}', permission refused.") from exc
-    except UnicodeDecodeError as exc:
-        raise ToolError(f"Cannot convert the file '{filepath}' to UTF-8") from exc
