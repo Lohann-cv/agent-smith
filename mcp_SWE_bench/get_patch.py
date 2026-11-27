@@ -5,7 +5,6 @@ from mcp.server.mcpserver.exceptions import ToolError
 
 mcp = MCPServer("mbpp")
 
-"""===GET_PATCH==="""
 
 @mcp.tool(
     name="get_patch",

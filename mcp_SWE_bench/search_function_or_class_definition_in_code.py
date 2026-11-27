@@ -9,7 +9,6 @@ from utils import BASE_DIR
 
 mcp = MCPServer("mbpp")
 
-"""===SEARCH_FUNCTION_OR_CLASS_DEFINITION_IN_CODE==="""
 
 @mcp.tool(
     name="search_function_or_class_definition_in_code",

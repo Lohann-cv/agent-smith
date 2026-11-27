@@ -9,8 +9,6 @@ mcp = MCPServer("mbpp")
 BASE_DIR = Path.cwd().resolve()
 
 
-"""===SEARCH_CODE==="""
-
 @mcp.tool(
     name="search_code",
     description="Perform a grep-like regex search in the codebase matching a file pattern."

@@ -8,8 +8,6 @@ from utils import BASE_DIR, check_path, read_text_file
 
 mcp = MCPServer("mbpp")
 
-"""===FIND_REFERENCES==="""
-
 @mcp.tool(
     name="find_references",
     description="Find all usages of a symbol in the codebase (function or class)."

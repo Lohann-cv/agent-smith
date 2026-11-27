@@ -7,7 +7,6 @@ from utils import BASE_DIR, run_subprocess, TIMEOUT_SECONDS
 mcp = MCPServer("mbpp")
 SCRIPT_TO_RUN = BASE_DIR / "testbed.py"
 
-"""===RUN_TESTS==="""
 
 @mcp.tool(
     name="run_tests",

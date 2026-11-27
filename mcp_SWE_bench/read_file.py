@@ -6,8 +6,6 @@ from utils import read_text_file, check_path
 
 mcp = MCPServer("mbpp")
 
-"""===READ_FILE==="""
-
 @mcp.tool(
     name="read_file_content",
     description="Read the content of a file and return it as a formated string."

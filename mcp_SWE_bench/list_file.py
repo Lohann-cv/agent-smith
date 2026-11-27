@@ -6,7 +6,6 @@ from pydantic import Field
 
 mcp = MCPServer("mbpp")
 
-"""===LIST_FILES==="""
 
 @mcp.tool(
     name="list_files",

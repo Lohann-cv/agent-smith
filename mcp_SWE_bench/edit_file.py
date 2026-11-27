@@ -6,7 +6,6 @@ from utils import check_path, read_text_file
 
 mcp = MCPServer("mbpp")
 
-"""===EDIT_FILE==="""
 
 @mcp.tool(
     name="edit_file_content",
