@@ -5,9 +5,9 @@ from typing import Annotated
 from mcp.server import MCPServer
 from mcp.server.mcpserver.exceptions import ToolError
 from pydantic import Field
+from utils import BASE_DIR
 
 mcp = MCPServer("mbpp")
-BASE_DIR = Path.cwd().resolve()
 
 """===SEARCH_FUNCTION_OR_CLASS_DEFINITION_IN_CODE==="""
 

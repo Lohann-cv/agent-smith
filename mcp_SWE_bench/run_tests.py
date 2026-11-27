@@ -5,7 +5,7 @@ from mcp.server.mcpserver.exceptions import ToolError
 from utils import BASE_DIR, run_subprocess, TIMEOUT_SECONDS
 
 mcp = MCPServer("mbpp")
-SCRIPT_TO_RUN = BASE_DIR / testbed.py
+SCRIPT_TO_RUN = BASE_DIR / "testbed.py"
 
 """===RUN_TESTS==="""
 

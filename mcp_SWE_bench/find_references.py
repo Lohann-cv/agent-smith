@@ -1,5 +1,5 @@
 import ast
-from pathlib import Path
+import pathlib
 from mcp.server import MCPServer
 from mcp.server.mcpserver.exceptions import ToolError
 from typing import Annotated
