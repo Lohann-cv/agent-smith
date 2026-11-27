@@ -17,8 +17,7 @@ mcp = MCPServer("mbpp")
 def find_references(
     name: Annotated[
         str,
-        Field(min_length=1, description="Name of the function or class symbol to find reference
-s for.")
+        Field(min_length=1, description="Name of the function or class symbol to find referencs for.")
     ],
     filepath: Annotated[
         str,
@@ -29,7 +28,19 @@ s for.")
         Field(ge=1, description="1-based line number of the symbol in filepath.")
     ]
 ) -> str:
-    """TODO"""
+    """Find and get all occurences of a given pattern in a codebase.
+
+    Args:
+        name: Name of the function or class symbol to find referencs for.
+        filepath: Relative path of the file containing the sybol.
+        line: 1-based line number of the symbol in filepath.
+
+    Returns
+        A fromated string of all the references
+
+    Raises:
+        ToolError if the 'name' is emtpy or if the line isn't possible.
+    """
     target = name.strip()
     if not target:
         raise ToolError("'name' cannot be empty.")
